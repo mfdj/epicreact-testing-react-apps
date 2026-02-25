@@ -11,25 +11,33 @@ import Counter from '../../components/counter'
 // Luckily, it's handled for you by React Testing Library :)
 global.IS_REACT_ACT_ENVIRONMENT = true
 
-test('counter increments and decrements when the buttons are clicked', () => {
-  // 🐨 create a div to render your component to (💰 document.createElement)
-  //
-  // 🐨 append the div to document.body (💰 document.body.append)
-  //
-  // 🐨 use createRoot to render the <Counter /> to the div
-  // 🐨 get a reference to the increment and decrement buttons:
-  //   💰 div.querySelectorAll('button')
-  // 🐨 get a reference to the message div:
-  //   💰 div.firstChild.querySelector('div')
-  //
-  // 🐨 expect the message.textContent toBe 'Current count: 0'
-  // 🐨 click the increment button (💰 act(() => increment.click()))
-  // 🐨 assert the message.textContent
-  // 🐨 click the decrement button (💰 act(() => decrement.click()))
-  // 🐨 assert the message.textContent
-  //
-  // 🐨 cleanup by removing the div from the page (💰 div.remove())
-  // 🦉 If you don't cleanup, then it could impact other tests and/or cause a memory leak
-})
+function appendRoot() {
+  const rootEl = document.createElement('div')
+  rootEl.setAttribute('id', 'root')
+  document.body.append(rootEl)
+  return { root: createRoot(rootEl), rootEl };
+}
 
-/* eslint no-unused-vars:0 */
+test('counter increments and decrements when the buttons are clicked', async () => {
+  const { root, rootEl } = appendRoot();
+
+  await act(() => root.render(<Counter />));
+
+  const buttons = rootEl.querySelectorAll('button')
+  const increment = Array.from(buttons).find(el => el.innerHTML === 'Increment')
+  const decrement = Array.from(buttons).find(el => el.innerHTML === 'Decrement')
+  const message = rootEl.firstChild.querySelector('div')
+
+  expect(message.textContent).toBe('Current count: 0');
+
+  await act(() => increment.click());
+  expect(message.textContent).toBe('Current count: 1');
+
+  await act(() => decrement.click());
+  expect(message.textContent).toBe('Current count: 0');
+
+  await act(() => decrement.click());
+  expect(message.textContent).toBe('Current count: -1');
+
+  rootEl.remove()
+})
