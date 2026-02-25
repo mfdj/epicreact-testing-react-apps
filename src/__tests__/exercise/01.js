@@ -24,18 +24,20 @@ async function click(element) {
       new MouseEvent('click', {
         bubbles: true,
         cancelable: true,
-        button: 0,
+        button: 0, // `0` means left button click https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
       }),
     ),
   )
 }
+
+beforeEach(() => (document.body.innerHTML = ''))
 
 test('counter increments and decrements when the buttons are clicked', async () => {
   const {root, rootEl} = appendRoot()
 
   await act(() => root.render(<Counter />))
 
-  const buttons = rootEl.querySelectorAll('button')
+  const buttons = document.body.querySelectorAll('button')
   const increment = Array.from(buttons).find(el => el.innerHTML === 'Increment')
   const decrement = Array.from(buttons).find(el => el.innerHTML === 'Decrement')
   const message = rootEl.firstChild.querySelector('div')
@@ -50,6 +52,4 @@ test('counter increments and decrements when the buttons are clicked', async () 
 
   await click(decrement)
   expect(message.textContent).toBe('Current count: -1')
-
-  rootEl.remove()
 })
