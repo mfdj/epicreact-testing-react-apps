@@ -15,3 +15,8 @@ Repository cloned/forked from [github.com/kentcdodds/testing-react-apps](https:/
     * Repo setup [#1](https://github.com/mfdj/epicreact-testing-react-apps/pull/1)
     * Read But really, [what is a JavaScript Test?](https://kentcdodds.com/blog/but-really-what-is-a-javascript-test) and [what is a JavaScript Mock?](https://kentcdodds.com/blog/but-really-what-is-a-javascript-mock) which are both classic KCD "from the ground up" intros
     * the lesson makes mention of `src/__tests__/exercise/00.md` but it doesn't exist in git… so skipping that
+0. [simple-test-with-reactdom-intro](https://www.epicreact.dev/modules/testing-react-apps-v1/simple-test-with-reactdom-intro)
+    * Implemented with [act](https://react.dev/reference/react/act#reference) and enjoyed hand-rolling element selection and interaction with the [Document API](https://developer.mozilla.org/en-US/docs/Web/API/Document)
+    * `console.log(document.body.innerHTML)` is a hand way to debug what is being rendered
+    * useful reminder about the need to clean up the DOM, like `beforeEach(() => document.body.innerHTML = '')`
+    * [click()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click) is a legacy API that simulates a mouse click but `dispatchEvent(new MouseEvent(…))` is much closer to the actual behavior
