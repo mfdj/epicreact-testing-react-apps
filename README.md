@@ -20,3 +20,8 @@ Repository cloned/forked from [github.com/kentcdodds/testing-react-apps](https:/
     * `console.log(document.body.innerHTML)` is a hand way to debug what is being rendered
     * useful reminder about the need to clean up the DOM, like `beforeEach(() => document.body.innerHTML = '')`
     * [click()](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click) is a legacy API that simulates a mouse click but `dispatchEvent(new MouseEvent(…))` is much closer to the actual behavior
+0. [simple-test-with-react-testing-library-intro](https://www.epicreact.dev/modules/testing-react-apps-v1/simple-test-with-react-testing-library-intro)
+    * Great read [Fix the "not wrapped in act(...)" warning](https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning)
+    * used RTL helpers to manage React rendering and synthetic events leading to lower boilerplate
+    * RTL's `fireEvent` handles the `act(…)` wrap behind the scenes, so there is no need to dio this
+        * therefore if you see an **act** warning the solution is not to do this `act(() => fireEvent(…))` that's potentially covering up another problem
